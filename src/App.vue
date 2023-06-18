@@ -1,28 +1,40 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <home-page/>
+    <!-- <li v-for="item in arrayPokemons" :key="item.key">
+      {{ item.name }} {{ 
+      }}
+    </li> -->
+    
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HomePage from './HomePage.vue';
+import events from './services/events';
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  components: { HomePage },
+  data(){
+    return {
+      arrayPokemons: []
+    }
+  },
+
+  mounted(){
+    events.list().then(resposta => {
+      this.arrayPokemons = resposta.data.results
+      console.log("consultando:", resposta.data.results)
+    })
   }
+
 }
 </script>
 
-<style>
+<style scoped>
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background-color: #808080;
 }
+
 </style>
