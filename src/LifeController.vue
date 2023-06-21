@@ -1,7 +1,7 @@
 <template>
     <div class="controlBoxLife">
         <div class="controlBoxLifePlayer">    
-            <span> LifePlayer </span> 
+            <span> {{arrayPokemons[randomPokemons].name}} </span> 
             <span> LifeMonster </span>
         </div>
         <div class="controlBoxLifePlayer2">
@@ -25,8 +25,22 @@
 </template>
 
 <script>
+import events from './services/events';
 export default {
     props: ['lifePlayer','lifeMonster'],
+    data(){
+    return {
+        arrayPokemons: [],
+        randomPokemons: 0,
+    }
+},
+    mounted(){
+        events.list().then(resposta => {
+        this.arrayPokemons = resposta.data.results
+        this.randomPokemons = Math.floor(Math.random() * 10)
+        console.log("consultando:", resposta.data.results)
+        })
+    },
     computed: {
         lifeControlMonster(){
             return {
